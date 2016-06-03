@@ -12,25 +12,25 @@ func main() {
 	//source: https://twitter.com/PokerStarsJapan/status/725880733093400576
 	/*
 		PlayerOneHole := Deck{
-			Card{NINE, DIAMONDS},
-			Card{SIX, DIAMONDS},
+			NewCard{NINE, DIAMONDS},
+			NewCard{SIX, DIAMONDS},
 		}
 
 		PlayerTwoHole := Deck{
-			Card{FIVE, CLUBS},
-			Card{FIVE, HEARTS},
+			NewCard{FIVE, CLUBS},
+			NewCard{FIVE, HEARTS},
 		}
 
 		PlayerThreeHole := Deck{
-			Card{JACK, CLUBS},
-			Card{EIGHT, CLUBS},
+			NewCard{JACK, CLUBS},
+			NewCard{EIGHT, CLUBS},
 		}
 
 		board := Deck{
-			Card{NINE, CLUBS},
-			Card{SEVEN, CLUBS},
-			Card{FIVE, DIAMONDS},
-			Card{FOUR, DIAMONDS},
+			NewCard{NINE, CLUBS},
+			NewCard{SEVEN, CLUBS},
+			NewCard{FIVE, DIAMONDS},
+			NewCard{FOUR, DIAMONDS},
 		}
 	*/
 
@@ -39,18 +39,18 @@ func main() {
 	flag.Parse()
 
 	PlayerOneHole := Deck{
-		Card{JACK, SPADES},
-		Card{JACK, CLUBS},
+		NewCard(JACK, SPADES),
+		NewCard(JACK, CLUBS),
 	}
 
 	PlayerTwoHole := Deck{
-		Card{ACE, SPADES},
-		Card{ACE, HEARTS},
+		NewCard(ACE, SPADES),
+		NewCard(ACE, HEARTS),
 	}
 
 	PlayerThreeHole := Deck{
-		Card{KING, DIAMONDS},
-		Card{ACE, DIAMONDS},
+		NewCard(KING, DIAMONDS),
+		NewCard(ACE, DIAMONDS),
 	}
 	board := Deck{}
 
