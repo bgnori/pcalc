@@ -1,0 +1,11 @@
+{
+ "source": "https://twitter.com/PokerStarsJapan/status/725880733093400576",
+ "players": [
+   "9d6d", "5c5h", "Jc8c"
+ ],
+ "board": [
+   "9c7c5d", "4d"
+ ],
+ "trials": 100,
+ "goroutines": 4
+}

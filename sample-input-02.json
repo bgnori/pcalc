@@ -1,0 +1,10 @@
+{
+ "players": [
+   "Qh8h", "AcTs"
+ ],
+ "board": [
+   "AhQc6h"
+ ],
+ "trials": 100,
+ "goroutines": 4
+}
