@@ -5,10 +5,11 @@ import (
 	"fmt"
 	. "github.com/bgnori/npoker"
 	"os"
-	"runtime"
+	//"runtime"
 	"time"
 )
 
+/*
 type Request struct {
 	Source     string `json:"source"`
 	Players    []Deck `json:"players"`
@@ -16,30 +17,36 @@ type Request struct {
 	Trials     int    `json:"trials"`
 	Goroutines int    `json:"goroutines"`
 }
+*/
 
 func main() {
 
-	var r Request
+	var req Request
 	decoder := json.NewDecoder(os.Stdin)
-	decoder.Decode(&r)
+	decoder.Decode(&req)
 
-	fmt.Printf("%+v\n", r)
+	fmt.Printf("%+v\n", req)
 
-	if r.Goroutines > 1 {
-		runtime.GOMAXPROCS(runtime.NumCPU())
-	}
+	/*
+		if req.Goroutines > 1 {
+			runtime.GOMAXPROCS(runtime.NumCPU())
+		}
+	*/
 
-	calc := NewEqCalc(r.Board, r.Players)
+	w := NewWorkSet(req.Board, req.Players)
 
-	ex := NewRunner(r.Trials, r.Goroutines,
-		calc,
-		NewEqSummarizer(calc),
-	)
+	summary := NewSummary(req.Players)
+	r := NewRand()
+	b := GetSeedFromRAND()
+	r.SeedFromBytes(b)
 
 	start := time.Now()
-	ex.Run()
+	for i := 0; i < req.Trials; i++ {
+		u := w.Clone()
+		summary.Add(u.Run(r))
+	}
 	end := time.Now()
 
 	fmt.Printf("%f秒\n", (end.Sub(start)).Seconds())
-	fmt.Println(ex.Summary())
+	fmt.Println(summary)
 }
