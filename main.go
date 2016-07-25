@@ -2,22 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
+	//"fmt"
 	. "github.com/bgnori/npoker"
 	"os"
 	//"runtime"
 	"time"
 )
-
-/*
-type Request struct {
-	Source     string `json:"source"`
-	Players    []Deck `json:"players"`
-	Board      []Deck `json:"board"`
-	Trials     int    `json:"trials"`
-	Goroutines int    `json:"goroutines"`
-}
-*/
 
 func main() {
 
@@ -25,7 +15,7 @@ func main() {
 	decoder := json.NewDecoder(os.Stdin)
 	decoder.Decode(&req)
 
-	fmt.Printf("%+v\n", req)
+	//fmt.Printf("%+v\n", req)
 
 	/*
 		if req.Goroutines > 1 {
@@ -35,18 +25,18 @@ func main() {
 
 	w := NewWorkSet(req.Board, req.Players)
 
-	summary := NewSummary(req.Players)
 	r := NewRand()
 	b := GetSeedFromRAND()
+	summary := NewSummary(req, b)
 	r.SeedFromBytes(b)
 
-	start := time.Now()
+	summary.Start = time.Now()
 	for i := 0; i < req.Trials; i++ {
 		u := w.Clone()
 		summary.Add(u.Run(r))
 	}
-	end := time.Now()
+	summary.End = time.Now()
 
-	fmt.Printf("%f秒\n", (end.Sub(start)).Seconds())
-	fmt.Println(summary)
+	encoder := json.NewEncoder(os.Stdout)
+	encoder.Encode(summary)
 }
