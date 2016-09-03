@@ -47,6 +47,22 @@ func calc(fin *os.File, fout *os.File, trials int) {
 	encoder.Encode(summary)
 }
 
+func calc2(fin *os.File, fout *os.File, trials int) {
+	var req Request
+
+	decoder := json.NewDecoder(fin)
+	decoder.Decode(&req)
+	summary := NewSummary(req)
+	summary.Start = time.Now()
+
+	w := NewWorkSet(req.Board, req.Players)
+	w.ByComb(summary)
+	summary.End = time.Now()
+
+	encoder := json.NewEncoder(fout)
+	encoder.Encode(summary)
+}
+
 func main() {
 	var count int
 	var input string
@@ -90,5 +106,6 @@ func main() {
 		}
 		defer fout.Close()
 	}
-	calc(fin, fout, count)
+	//calc(fin, fout, count)
+	calc2(fin, fout, count)
 }
