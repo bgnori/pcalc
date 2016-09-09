@@ -4,8 +4,9 @@ import (
 	"encoding/json"
 	"flag"
 	. "github.com/bgnori/npoker"
+	"log"
 	"os"
-	//"runtime"
+	"runtime/pprof"
 	"strings"
 	"time"
 )
@@ -67,6 +68,7 @@ func main() {
 	var count int
 	var input string
 	var output string
+	var spprof string
 	var fin *os.File
 	var fout *os.File
 	var err error
@@ -76,6 +78,7 @@ func main() {
 	flag.BoolVar(&auto, "a", false, "auto filename based on input, *request.json => *result.json")
 	flag.StringVar(&input, "in", "", "input file. default is STDIN")
 	flag.StringVar(&output, "out", "", "output file. default is STDOUT")
+	flag.StringVar(&spprof, "pprof", "", "pprof file.")
 	flag.Parse()
 
 	if len(input) == 0 {
@@ -106,6 +109,17 @@ func main() {
 		}
 		defer fout.Close()
 	}
+
+	if len(spprof) > 0 {
+		var fpprof *os.File
+		fpprof, err := os.Create(spprof)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer pprof.StopCPUProfile()
+		pprof.StartCPUProfile(fpprof)
+	}
+
 	//calc(fin, fout, count)
 	calc2(fin, fout, count)
 }
